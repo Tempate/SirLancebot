@@ -7,7 +7,9 @@ import itertools
 
 class Timezone(Plugin):
     def __init__(self, data):
-        super().__init__("Timezone", ["time"])
+        super().__init__("Timezone",
+                         "Get current time in a city. cmd: !time <city>",
+                         ["time"])
         self.data = data
 
         self.timezones = pytz.all_timezones
@@ -20,5 +22,5 @@ class Timezone(Plugin):
             if city_code in timezone:
                 time = datetime.now(pytz.timezone(timezone))
                 return city_name + ": " + time.strftime('%H:%M:%S')
-
+        
         return "No timezone for " + city_name
