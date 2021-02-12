@@ -10,11 +10,12 @@ class Echo(Plugin):
 
 
     def echo(self, data):
-        err_msg = "Error: Echo needs a msg, try !h echo"
+        if not data["args"]:
+            return "Error: echo needs a message. Try: !h echo"
 
-        if data["args"] == None or data["args"] == []:
-            return err_msg
         msg = " ".join(data["args"])
+
         if len(msg) > 400:
-            return err_msg
+            return "Error: message is too long. Try: !h echo"
+        
         return msg

@@ -5,7 +5,6 @@ import chess.pgn
 
 
 class Chess(Plugin):
-    
     board = None
 
     def __init__(self, data):
@@ -39,21 +38,21 @@ class Chess(Plugin):
             return "Game over"
 
     def fen(self, data):
-        err = self.is_board_active()
-        if err:
+        if err := self.is_board_inactive():
             return err
 
         return self.board.fen()
 
     def pgn(self, data):
-        err = self.is_board_active()
-        if err:
+        if err := self.is_board_inactive():
             return err
 
-        b_pgn = chess.pgn.Game.from_board(self.board)
-        return str(b_pgn.mainline())
+        pgn = chess.pgn.Game.from_board(self.board)
+        
+        return str(pgn.mainline())
 
-    def is_board_active(self):
+    def is_board_inactive(self):
         if not self.board:
             return "No board has been initialized, try !chess"
+        
         return False
