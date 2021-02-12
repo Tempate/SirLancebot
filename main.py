@@ -8,7 +8,7 @@ from lib import plugins
 
 CONF_FILE_NAME = "conf.json"
 
-plugin_names = ["Trivia", "Lichess", "Timezone", "Weather", "Echo", "EightBall"]
+plugin_names = ["Trivia", "Chess", "Lichess", "Timezone", "Weather", "Echo", "EightBall"]
 plugins = []
 name_to_plugin = {}
 
@@ -71,7 +71,9 @@ def listen():
             if data["cmd"] in plugin.cmds:
                 msg = exec_cmd(plugin, data)
 
-    bot.message(data["chan"], msg)
+    #Maybe we don't want the bot to send a msg
+    if msg:
+        bot.message(data["chan"], msg)
 
 
 def exec_cmd(plugin, data):
