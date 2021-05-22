@@ -33,7 +33,7 @@ class Chess(Plugin):
             else:
                 return "Supply the move, !m <move>"
         except ValueError as _:
-            return f"'{move}' is not a valid move"
+            return move + " is not a valid move"
 
         if self.board.is_game_over():
             return "Game over"
