@@ -1,7 +1,7 @@
 import hashlib
 import re
 import socket
-import ssl
+# import ssl
 import time
 
 __author__ = "Anonymous"
@@ -30,7 +30,7 @@ class Bot:
             self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 0)
             self.s.setblocking(True)
-            self.s = ssl.wrap_socket(self.s)
+            # self.s = ssl.wrap_socket(self.s)
             self.s.connect((self.conf["irc"], self.conf["port"]))
         except Exception as e:
             print("Failed to connect. %s:%d" % (self.conf["irc"], self.conf["port"]))
