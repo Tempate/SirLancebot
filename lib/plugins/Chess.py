@@ -19,7 +19,8 @@ class Chess(Plugin):
         return "Board initialized"
 
     def m(self, data):
-        err = self.is_board_active()
+        err = self.is_board_inactive()
+
         if err:
             return err
 
@@ -38,13 +39,17 @@ class Chess(Plugin):
             return "Game over"
 
     def fen(self, data):
-        if err := self.is_board_inactive():
+        err = self.is_board_inactive()
+
+        if err:
             return err
 
         return self.board.fen()
 
     def pgn(self, data):
-        if err := self.is_board_inactive():
+        err = self.is_board_inactive()
+
+        if err:
             return err
 
         pgn = chess.pgn.Game.from_board(self.board)
