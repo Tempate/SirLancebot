@@ -1,4 +1,6 @@
 from lib.plugins.Plugin import Plugin
+from youtubesearchpython import VideosSearch
+
 
 class YouTube(Plugin):
     def __init__(self, data):
