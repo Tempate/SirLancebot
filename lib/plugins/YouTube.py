@@ -1,6 +1,5 @@
 from lib.plugins.Plugin import Plugin
-from youtubesearchpython import VideosSearch
-
+from youtube_search import YoutubeSearch
 
 class YouTube(Plugin):
     def __init__(self, data):
@@ -16,8 +15,11 @@ class YouTube(Plugin):
 
         try:
           title = " ".join(data["args"])
-          search = VideosSearch(title, limit = 1)
-          msg = search.result()["result"][0]["link"]
+          result = YoutubeSearch(title, max_results=1).to_dict()
+          if len(result) < 1 :
+              msg = "No videos found"
+          else :
+              msg = result[0]["title"] + " : " + "https://youtube.com" + result[0]["url_suffix"]
         except:
           msg = "No videos found"
         
