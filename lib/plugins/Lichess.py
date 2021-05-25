@@ -10,6 +10,7 @@ class Lichess(Plugin):
                          ["rating", "tv"])
         self.data = data
 
+
     def rating(self, data):
         user = data["args"][0] if data["args"] else data["nick"]
         mode = data["args"][1] if len(data["args"]) > 1 else None
@@ -21,26 +22,29 @@ class Lichess(Plugin):
         except lichess.api.ApiHttpError:
             return "User not found."
 
-        r = "<%s> " % linick
+        msg = "%s: " % linick
+        perfs = user["perfs"]
+        
+        if not perfs.keys(): 
+            return "No information about user."
 
-        if mode:
-            if mode in user["perfs"]:
-                r += "%s: %d" % (mode, user["perfs"][mode]["rating"])
-            else:
-                return "Incorrect mode."
+        if mode not in perfs:
+            relevant_modes = set(["blitz", "rapid", "puzzle", "classical"])
+
+            for mode in list(relevant_modes & set(perfs.keys())):
+                msg += "%s: %d, " % (mode, perfs[mode]["rating"])
+
+            msg = msg[:-2]
         else:
-            info = user["perfs"]
+            msg += self.__format_rating(perfs, mode)
 
-            for tc, rating in sorted(info.items(), key=lambda item: item[1]["rating"], reverse=True):
-                r += "%s: %d, " % (tc, rating["rating"])
+        return msg
 
-            r = r[:-2]
-
-        return r
 
     def tv(self, data):
         user = data["args"][0] if data["args"] else data["nick"]
         return "https://lichess.org/@/%s/tv" % self.__lichess_username(user)
+
 
     def __lichess_username(self, nick):
         lichess_usernames = self.data[self.name]["lichess_usernames"]
@@ -49,3 +53,6 @@ class Lichess(Plugin):
             return lichess_usernames[nick]
         else:
             return nick
+
+    def __format_rating(self, perfs, mode):
+        return "%s: %d (N=%d, Δ=%d, σ=%d)" % (mode, perfs[mode]["rating"], perfs[mode]["games"], perfs[mode]["prog"], perfs[mode]["rd"])
