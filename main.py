@@ -79,12 +79,11 @@ def listen():
 def exec_cmd(plugin, data):
     msg = "That's not a valid command format."
 
-    func = getattr(plugin, data["cmd"])
-
-    #try:
-    msg = func(data)
-    #except ValueError:
-    #    msg = "The number of arguments is incorrect."
+    try:
+        func = getattr(plugin, data["cmd"])
+        msg = func(data)
+    except:
+        msg = "There was an error executing the command."
 
     return msg
 
