@@ -1,36 +1,51 @@
 # SirLancebot
 
-A simple python bot. It's intended to be easy for plugins.
-The bot consists mainly of main.py and lib/Bot.py.
-To add code for a new plugin just add your code to the plugins folder.
+This project is an attempt at making a Python Bot for which it's very easy to write plugins.
 
-## Code
 
-The code is structured in three main files.
+## Running the code
+
+Install the requirements:
+```
+pip install -r requirements.txt
+```
+
+Run the code:
+```
+python main.py
+```
+
+
+## Code's Structure
+
+There are three main files:
 1. **Bot.py**: Handles sockets and connections.
-2. **main.py**: Interacts with Bot.py and links all plugins together.
-3. **Plugin.py**: States the main structure every plugin should follow.
+2. **Plugin.py**: States the main structure every plugin should follow.
+3. **main.py**: Interacts with Bot.py and links all plugins together.
 
-### Plugins
-A plugin specifies a series of actions to be performed in any of the channels the bot is in.
-Initalize your plugin with its name and the list of commands it handles. The plugin's commands should have a function named after them that takes in a dictionary data and returns a message.
 
 ## Config file
 
-This file is not included in the repository and must be added. Each channel should have 
-an entry as shown below. 
+This file must be added to the repository for the bot to work.
 
 ```
 {
     "conf" : {
-        "irc": "irc.freenode.net", # IRC address
-        "port": 7000, # IRC port
-        "nick": "", # BOT's nick
-        "user": "", # BOT's username
-        "real": "", # BOT's realname
-        "pass": "", # BOT's password
-        "chans": [""], # List of channels
-        "weather_key": "" # Open weather api's key
+        "irc": "irc.libera.chat",
+        "port": 6667,
+        "nick": "SirLancebot",
+        "user": "SirLancebot",
+        "real": "SirLancebot",
+        "pass": "",
+        "chans": [""]
+    },
+
+    "Lichess" : {
+        "lichess_usernames" : {}
+    },
+
+    "Weather" : {
+        "key": ""
     }
 }
 ```
